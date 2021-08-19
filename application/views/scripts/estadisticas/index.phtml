@@ -1,0 +1,91 @@
+<div class="row">
+
+  <div class="col-md-12">
+
+    <h2 class="box-title" style="text-align: center;">Pedidos de Compras</h2>
+    <div class="col-md-12">
+      <div class="info-box">
+        <span class="info-box-icon bg-yellow fa fa-shopping-cart"></span>
+        <div class="info-box-content" style="text-align: center;">
+          <h1>Total: <b><?php echo $this->totalidades['total_pedidos']?></b></h3>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="row">
+
+  <div class="col-md-6">
+
+    <h2 class="box-title" style="text-align: center;">Pedidos por Material de Stock</h2>
+    <div class="col-md-12">
+      <div class="info-box">
+        <span class="info-box-icon bg-yellow fa fa-cube"></span>
+        <div class="info-box-content" style="text-align: center;">
+          <h3>Total: <b><?php echo $this->totalidades['stock_total']?></b></h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="info-box">
+        <span class="info-box-icon bg-yellow fa fa-flag"></span>
+        <div class="info-box-content" style="text-align: center;">
+          <span class="info-box-text">NACIONALES</span>
+          <h3><b><?php echo $this->totalidades['stock_nac']?></b></h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="info-box">
+        <span class="info-box-icon bg-yellow fa fa-plane"></span>
+        <div class="info-box-content" style="text-align: center;">
+          <span class="info-box-text">INTERNACIONALES</span>
+          <h3><b><?php echo $this->totalidades['stock_int']?></b></h3>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="col-md-6">
+
+    <h2 class="box-title" style="text-align: center;">Pedidos por Cargo Directo</h2>
+    <div class="col-md-12">
+      <div class="info-box">
+        <span class="info-box-icon bg-yellow fa fa-cart-arrow-down"></span>
+        <div class="info-box-content" style="text-align: center;">
+          <span class="info-box-text"></span>
+          <h3>Total: <b><?php echo $this->totalidades['directo_total']?></b></h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="info-box">
+        <span class="info-box-icon bg-yellow fa fa-flag"></span>
+        <div class="info-box-content" style="text-align: center;">
+          <span class="info-box-text">NACIONALES</span>
+          <h3><b><?php echo $this->totalidades['directo_nac']?></b></h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="info-box">
+        <span class="info-box-icon bg-yellow fa fa-plane"></span>
+        <div class="info-box-content" style="text-align: center;">
+          <span class="info-box-text">INTERNACIONALES</span>
+          <h3><b><?php echo $this->totalidades['directo_int']?></b></h3>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+

@@ -1,0 +1,1187 @@
+<?php //$this->formSeguimiento->renderForm(false); 
+//$fecha = new Zend_Date($fechaori);
+//echo $fecha->toString('dd/MM/yyy');
+//Zend_Debug::dd($this->pedido);
+?>
+
+<section class="invoice">
+
+	<div class="row">
+		<div class="col-md-12">
+
+			<div class="col-md-4 text-center">
+				<?php if($this->pedido->tipo == 'NACIONAL'): ?>
+		  		<a type="button" href="<?php echo $this->url(array('controller' => 'pedido', 'action' => 'seguimiento')); ?>" class="btn btn-primary btn-flat" >
+		    		<i class="fa fa-arrow-left"></i> Volver
+		  		</a>
+		  		<?php endif ?>
+
+				<?php if($this->pedido->tipo == 'INTERNACIONAL'): ?>
+		  		<a type="button" href="<?php echo $this->url(array('controller' => 'pedido', 'action' => 'seguimiento')); ?>" class="btn btn-primary btn-flat" >
+		    		<i class="fa fa-arrow-left"></i> Volver
+		  		</a>
+		  		<?php endif ?>
+	  		</div>
+
+	  		<div class="col-md-4 text-center">
+		  		<a class="btn btn-success btn-flat" type="button" data-toggle="modal" data-target="#modal-mod" >
+		    		<i class="fa fa-clock-o"></i> Modificaciones
+		  		</a>
+	  		</div>
+
+	  		<div class="col-md-4 text-center">
+		  		<a class="btn btn-warning btn-flat" type="button" data-toggle="modal" data-target="#modal-firmas" >
+		    		<i class="fa fa-check-square-o"></i> Firmas
+		  		</a>
+	  		</div>
+
+		</div>
+	</div>
+
+
+	<!--Modal de modificaciones-->
+    <div class="modal fade" id="modal-mod">
+      	<div class="modal-dialog">
+	        <div class="modal-content">
+	          	<div class="modal-header">
+	            	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	             		<span aria-hidden="true">&times;</span>
+	             	</button>
+	            	<h4 class="modal-title">Historial de modificaciones</h4>
+	          	</div>
+
+	          	<div class="modal-body table-responsive">
+				  	<!--TABLA DE MODIFICACIONES-->
+
+		          	<table id="modificaciones" class="table table-striped table-bordered" align="center">
+			            <thead class="bg-gray">
+				            <tr>
+				            	<th>Fecha</th>
+				            	<th>Hora</th>
+				            	<th>Usuario</th>
+								<th>Campo</th>
+								<th>Modificación</th>
+				            </tr>
+			            </thead>
+		          	</table>
+
+	          	</div>
+
+	          	<div class="modal-footer">
+	            	<button type="button" class="btn btn-default pull-rigth" data-dismiss="modal">Cerrar</button>
+	          	</div>
+	        </div>
+	        <!-- /.modal-content -->
+      	</div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal mod -->
+
+
+
+	<!--Modal de firmas de liberacion-->
+    <div class="modal fade" id="modal-firmas">
+      	<div class="modal-dialog">
+	        <div class="modal-content">
+	          	<div class="modal-header">
+	            	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	             		<span aria-hidden="true">&times;</span>
+	             	</button>
+	            	<h4 class="modal-title">Niveles de liberación</h4>
+	          	</div>
+
+	          	<div class="modal-body">
+
+				    <table class="table table-striped table-bordered">  
+				    	<thead class="bg-gray">
+					        <tr style="text-align: center; border-bottom: 1px solid #EEE;">
+								<th style="text-align: center;">Nivel Liberación</th>
+								<th style="text-align: center;">Fecha Liberación</th>
+							</tr>
+						</thead>
+
+						<tbody>
+						<?php if($this->pedido->lib_cargo_n1):?>
+					        <tr style="border-bottom: 1px solid #EEE;">
+					            <td style="text-align: center;"><?php echo $this->pedido->lib_cargo_n1?></td>
+					            <td style="text-align: center;"><?php echo $this->pedido->lib_fecha_n1?></td>
+					        </tr>
+				     	<?php endif; ?>
+
+						<?php if($this->pedido->lib_cargo_n2):?>
+					        <tr style="border-bottom: 1px solid #EEE;">
+					            <td style="text-align: center;"><?php echo $this->pedido->lib_cargo_n2?></td>
+					            <td style="text-align: center;"><?php echo $this->pedido->lib_fecha_n2?></td>
+					        </tr>
+					     <?php endif; ?>
+
+		 				<?php if($this->pedido->lib_cargo_n3):?>
+					        <tr style="border-bottom: 1px solid #EEE;">
+					            <td style="text-align: center;"><?php echo $this->pedido->lib_cargo_n3?></td>
+					            <td style="text-align: center;"><?php echo $this->pedido->lib_fecha_n3?></td>
+					        </tr>
+					    <?php endif; ?>
+
+		 				<?php if($this->pedido->lib_cargo_n4):?>
+					        <tr style="border-bottom: 1px solid #EEE;">
+					            <td style="text-align: center;"><?php echo $this->pedido->lib_cargo_n4?></td>
+					            <td style="text-align: center;"><?php echo $this->pedido->lib_fecha_n4?></td>
+					        </tr>
+					    <?php endif; ?>
+
+		 				<?php if($this->pedido->lib_cargo_n5):?>
+					        <tr style="border-bottom: 1px solid #EEE;">
+					            <td style="text-align: center;"><?php echo $this->pedido->lib_cargo_n5?></td>
+					            <td style="text-align: center;"><?php echo $this->pedido->lib_fecha_n5?></td>
+					        </tr>
+					     <?php endif; ?>
+				        </tbody>	
+				        	        
+		    		</table>
+
+	          	</div>
+
+	          	<div class="modal-footer">
+	            	<button type="button" class="btn btn-default pull-rigth" data-dismiss="modal">Cerrar</button>
+	          	</div>
+	        </div>
+	        <!-- /.modal-content -->
+      	</div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal firmas -->
+	
+	</br>
+
+
+	<!--SECCION DEL PEDIDO DE COMPRAS-->
+    <div class="box">
+
+    	<div class="box-header bg-orange">
+	      	<h3 class="box-title">
+	        	<i class="fa fa-shopping-cart"></i> Pedido de Compras
+	      	</h3>
+    	</div>
+
+    	<div class="box-body">
+		  	<!-- info row -->
+		  	<div class="row invoice-info">
+			    <div class="box-body with-border">
+					
+					<div class="row">
+
+						<div class="form-group col-md-12">
+				    		<div class="form-group col-md-3">
+				              	<label>Tipo de compra</label>
+				              	<input class="form-control" disabled="" type="text" value="<?php echo $this->pedido->tipo?>"></input>
+				            </div>
+
+				    		<div class="form-group col-md-3">
+				              	<label>Estado de liberación</label>
+				              	<input class="form-control" disabled="" type="text" value="<?php echo $this->pedido->estado?>"></input>
+				            </div>
+
+				    		<div class="form-group col-md-3">
+				              	<label>Nro. Documento</label>
+				              	<input class="form-control" disabled="" type="text" value="<?php echo $this->pedido->numero_documento?>"></input>
+				            </div>
+
+				    		<div class="form-group col-md-3">
+				              	<label>Fecha de creación</label>
+				              	<input class="form-control" disabled="" type="text" value="<?php echo $this->pedido->fecha_documento?>"></input>
+				            </div>
+			        	</div>
+
+		            </div>
+
+			    	<!--FORMULARIO-->
+			    	<form role="form" action="#" method="POST">
+
+			    		<div class="row">
+
+			    			<div class="form-group col-md-12">
+
+					    		<div class="form-group col-md-6">
+				              		<label>Proveedor</label>
+				              		<input class="form-control" disabled="" type="text" value="<?php echo $this->pedido->proveedor?>"></input>
+				            	</div>
+
+					    		<div class="form-group col-md-6" <?php if ($this->pedido->tipo=='NACIONAL') echo 'style="display: none";'; ?> >
+					              	<label>Interlocutor</label>
+					              	<?php 
+				              		$this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_INTERLOCUTOR)->setValue($this->segPedido->interlocutor);
+				              		echo $this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_INTERLOCUTOR)->renderViewHelper(); 
+					              	?>
+				            	</div>
+
+			    			</div>
+
+			    			<div class="form-group col-md-12">
+
+					    		<div class="form-group col-md-6">
+					              	<label>Condición de Pago</label>
+					              	<?php 
+				              		$this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_COND_PAGO)->setValue($this->segPedido->cond_pago);
+					              	echo $this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_COND_PAGO)->renderViewHelper(); 
+					              	?>
+					            </div>
+
+					    		<div class="form-group col-md-6">
+					              	<label>Condición de Entrega</label>
+					              	<?php 
+				              		$this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_COND_ENTREGA)->setValue($this->segPedido->cond_entrega);
+					              	echo $this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_COND_ENTREGA)->renderViewHelper(); 
+					              	?>
+					            </div>
+
+			    			</div>
+
+			    			<div class="form-group col-md-12">
+
+				    			<div class="form-group col-md-6" onchange="vencimientoListener()">
+
+						    		<div class="form-group col-md-6" >
+
+						              	<label>Tiempo de Entrega</label>	
+						              	<div class="form-group">
+							              	<?php
+		      			              		$this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_TIEMPO_ENTREGA_NUMERO)->setValue($this->segPedido->tmp_entr_numero);            	
+							              	echo $this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_TIEMPO_ENTREGA_NUMERO)->renderViewHelper(); 
+							              	?>	
+							              	<span class="hint">Cantidad de ciclos</span>		              		              		
+						              	</div>
+						         
+						              	<div class="form-group">
+							              	<?php
+		      			              		$this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_TIEMPO_ENTREGA_CICLO)->setValue($this->segPedido->tmp_entr_ciclo);         	
+							              	echo $this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_TIEMPO_ENTREGA_CICLO)->renderViewHelper(); 
+							              	?>	
+							              	<span class="hint">Tipo de ciclo</span>			              		   
+					              		</div>
+				             		
+					              		<div class="form-group">
+							              	<?php 
+		      			              		$this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_TIEMPO_ENTREGA_TIPO)->setValue($this->segPedido->tmp_entr_tipo);    
+							              	echo $this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_TIEMPO_ENTREGA_TIPO)->renderViewHelper(); 
+							              	?>	
+							              	<span class="hint">Dias habiles o continuo?</span>   	
+				              			</div>
+
+					            	</div>
+
+
+					    			<div class="form-group col-md-6">
+
+										<div class="form-group">
+							                <label>Fecha Firma del Proveedor</label>
+							                <div class="input-group date">
+							                  	<div class="input-group-addon">
+							                    	<i class="fa fa-calendar"></i>
+							                  	</div>
+						  						<?php 
+						              			$this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_FCH_PROVEEDOR)->setValue($this->segPedido->fch_firma_prov); 	  		
+						  						echo $this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_FCH_PROVEEDOR)->renderViewHelper(); 
+						  						?>
+							                </div>
+							                <span class="hint">Formato: DD/MM/AAAA</span>
+						            	</div>
+
+						            	<div class="form-group">
+							              	<label>Fecha de Vencimiento</label>
+							                <div class="input-group date">
+							                  	<div class="input-group-addon">
+							                    	<i class="fa fa-calendar"></i>
+							                  	</div>
+						  						<?php 
+						              			$this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_FCH_VENCIMIENTO)->setValue($this->segPedido->fch_venci_ped); 	
+						  						echo $this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_FCH_VENCIMIENTO)->renderViewHelper(); 
+						  						?>
+							                </div>
+							                <span class="hint">Formato: DD/MM/AAAA</span>
+						            	</div>
+
+					    			</div>
+
+				    			</div>
+
+				    			<div class="form-group col-md-6">
+
+						    		<div class="form-group col-md-6">
+						              	<label>Fecha de Recepción ACMA</label>
+						                <div class="input-group date">
+						                  	<div class="input-group-addon">
+						                    	<i class="fa fa-calendar"></i>
+						                  	</div>
+					  						<?php 
+					              			$this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_FCH_RECEPCION)->setValue($this->segPedido->fch_recep_ped); 	
+					  						echo $this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_FCH_RECEPCION)->renderViewHelper(); 
+					  						?>
+						                </div>
+						                <span class="hint">Formato: DD/MM/AAAA</span>
+						            </div>
+
+						    		<div class="form-group col-md-6">
+						              	<label>Fecha de Pago al Proveedor</label>
+						                <div class="input-group date">
+						                  	<div class="input-group-addon">
+						                    	<i class="fa fa-calendar"></i>
+						                  	</div>
+					  						<?php 
+					              			$this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_FCH_PAGO_PROV)->setValue($this->segPedido->fch_pago_prov); 	  	
+					  						echo $this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_FCH_PAGO_PROV)->renderViewHelper(); 
+					  						?>
+						                </div>
+						                <span class="hint">Formato: DD/MM/AAAA</span>
+						            </div>
+
+					    			<div class="form-group col-md-6" <?php if ($this->pedido->tipo=='INTERNACIONAL') echo 'style="display: none";'; ?>>
+						              	<label>Fecha de Eval. Proveedor</label>
+						                <div class="input-group date">
+						                  	<div class="input-group-addon">
+						                    	<i class="fa fa-calendar"></i>
+						                  	</div>
+										<?php 
+				          				$this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_FCH_EVALUACION)->setValue($this->segPedido->fch_eval_prov); 
+										echo $this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_FCH_EVALUACION)->renderViewHelper(); 
+										?>
+						                </div>
+						                <span class="hint">Formato: DD/MM/AAAA</span>
+					            	</div>
+
+					            	<div class="form-group col-md-6" <?php if ($this->pedido->tipo=='INTERNACIONAL') echo 'style="display: none";'; ?>>
+						              	<label>Fecha de Remision Eval.</label>
+						                <div class="input-group date">
+						                  	<div class="input-group-addon">
+						                    	<i class="fa fa-calendar"></i>
+						                  	</div>
+										<?php 
+				          				$this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_FCH_REM_EVAL)->setValue($this->segPedido->fch_remis_eval); 
+										echo $this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_FCH_REM_EVAL)->renderViewHelper(); 
+										?>
+						                </div>
+						                <span class="hint">Formato: DD/MM/AAAA</span>
+					            	</div>
+
+						        </div>
+
+			    			</div>
+
+				            <div class="form-group col-md-12">
+
+					    		<div class="form-group col-md-3" <?php if ($this->pedido->tipo=='INTERNACIONAL') echo 'style="display: none";'; ?>>
+
+					              	<label>Fianza/Retención?</label>
+									<div class="form-group">
+										<?php 
+					              		$this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_FIANZA)->setValue($this->segPedido->fianza);       
+										echo $this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_FIANZA)->renderViewHelper();
+										?>
+									</div>
+
+									<div class="form-group" id="fechasFianza" <?php if ($this->segPedido->fianza=='no' or $this->segPedido->fianza== null) echo 'style="display: none";'; ?>>
+
+						                <div class="input-group date">
+						                  	<div class="input-group-addon">
+						                    	<i class="fa fa-calendar"></i>
+						                  	</div>
+					  						<?php 	  
+					              			$this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_FCH_PAGO_ANTICIPO)->setValue($this->segPedido->fch_pago_anti);	
+					  						echo $this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_FCH_PAGO_ANTICIPO)->renderViewHelper(); 
+					  						?>
+						                </div>
+										<span class="hint">Fecha del pago anticipo</span>	
+										
+						                <div class="input-group date">
+						                  	<div class="input-group-addon">
+						                    	<i class="fa fa-calendar"></i>
+						                  	</div>	
+					  						<?php 
+					              			$this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_FCH_ENTREGA_FIANZA)->setValue($this->segPedido->fch_entr_fianza);
+					  						echo $this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_FCH_ENTREGA_FIANZA)->renderViewHelper(); 
+					  						?>
+						                </div>
+						                <span class="hint">Fecha de entrega del documento de fianza</span>
+
+						                <div class="input-group date">
+						                  	<div class="input-group-addon">
+						                    	<i class="fa fa-calendar"></i>
+						                  	</div>
+					  						<?php 
+					              			$this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_FCH_APROB_FIANZA)->setValue($this->segPedido->fch_aprob_fianza);
+					  						echo $this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_FCH_APROB_FIANZA)->renderViewHelper(); 
+					  						?>
+						                </div>
+										<span class="hint">Fecha aprobación de la fianza</span>	
+					                
+						                <div class="input-group date">
+						                  	<div class="input-group-addon">
+						                    	<i class="fa fa-calendar"></i>
+						                  	</div>
+					  						<?php 
+					              			$this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_FCH_DEVOL_FIANZA)->setValue($this->segPedido->fch_dev_fianza);
+					  						echo $this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_FCH_DEVOL_FIANZA)->renderViewHelper(); 
+					  						?>
+						                </div>
+						                <span class="hint">Fecha de devolución de la fianza</span>	
+					            	</div>
+					            </div>
+
+					    		<div class="form-group col-md-3" <?php if ($this->pedido->tipo=='INTERNACIONAL') echo 'style="display: none";'; ?>>
+
+					    			<div class="form-group">
+						              	<label>Aplica CRS?</label>
+										<?php 
+				              			$this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_COMPROMISO)->setValue($this->segPedido->compromiso); 
+										echo $this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_COMPROMISO)->renderViewHelper(); 
+										?>
+										<span class="hint">Compromiso de Responsabilidad Social</span>
+										<span class="hint">(Monto total => 2500 U.T)</span>
+									</div>
+
+									<div class="form-group" id="fchCompromisoCampo" <?php if($this->segPedido->compromiso=='no' or $this->segPedido->compromiso==null) echo 'style="display: none";'; ?>>
+						              	<label>Fecha CRS</label>
+						                <div class="input-group date">
+						                  	<div class="input-group-addon">
+						                    	<i class="fa fa-calendar"></i>
+						                  	</div>
+											<?php 
+				              				$this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_FCH_COMPROMISO)->setValue($this->segPedido->fch_compr_resp); 
+											echo $this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_FCH_COMPROMISO)->renderViewHelper(); 
+											?>
+						                </div>
+						                <span class="hint">Formato: DD/MM/AAAA</span>
+					            	</div>
+
+					            </div>
+
+				            </div>
+
+				          	<div class="row" style="display: none;">
+				    			<?php echo $this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_PEDIDO)->setValue($this->pedido->numero_documento); ?>
+			    			</div>
+
+			    		</div>
+
+			    		<div class="row">
+				           	<div class="form-group col-md-12" style="text-align: center;">
+			    					<?php echo $this->formSeguimiento->getElement(Application_Form_SeguimientoPedido::E_GUARDAR)->renderViewHelper(); ?>
+						 	</div>
+					 	</div>
+
+			        </form>
+
+			    </div>
+
+		  	</div>
+
+	  	</div>
+
+	</div>
+
+  	<!--SECCION DE POSICIONES-->
+    <div class="box">
+
+    	<div class="box-header bg-orange">
+		  	<h3 class="box-title">
+		      	<i class="fa fa-list-ol"></i> Posiciones
+		  	</h3>
+    	</div>
+
+
+    	<div class="box-body">
+		  	<!-- Table row -->
+		  	<div class="row">
+		        <div class="table-responsive col-md-12">
+		          	<table id="posiciones" class="display general table-hover table-striped table-bordered nowrap compact">
+			            <thead class="bg-gray">
+				            <tr>
+				            	<th class="text-center">Posición</th>
+				              	<th class="text-center">Descripción</th>
+				              	<th class="text-center">Monto Unitario</th>
+				              	<th class="text-center">Subtotal</th>
+				              	<th class="text-center">Opciones</th>
+				            </tr>
+			            </thead>
+			            <tbody>
+			            </tbody>
+		          	</table>
+		        </div>
+		        <!-- /.col -->
+		  	</div>
+		    <!-- /.row -->
+
+		  	<div class="row">
+		        <!-- /.col -->
+		        <div class="col-md-6 pull-right">
+		          	<div class="table-responsive">
+		            	<table class="table">
+			              	<tr>
+			                	<th>Monto Total:</th>
+			                	<td><?php echo $this->pedido->moneda." ".$this->monto->total?></td>
+			              	</tr>
+		            	</table>
+		          	</div>
+		        </div>
+		        <!-- /.col -->
+			</div>
+			<!-- /.row -->    		
+    	</div>
+
+    </div>
+
+
+	<!--SECCION DE ARCHIVOS-->
+    <!-- <div class="box">
+
+    	<div class="box-header bg-orange">
+		  	<h3 class="box-title">
+		      	<i class="fa fa-files-o"></i> Archivos
+		  	</h3>
+    	</div>
+
+
+    	<div class="box-body">
+
+			<form role="form" action="#" method="post" enctype="multipart/form-data">
+
+				<div class="row">
+					<div class="form-group col-md-6">
+					<label>Selección de archivo</label>
+						<?php //echo $this->formArchivo->getElement(Application_Form_Archivo::E_ARCHIVO)->renderFile();?>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group col-md-6" style="text-align: center;">
+			  			<?php // echo $this->formArchivo->getElement(Application_Form_Archivo::E_DESCRIPCION)->renderViewHelper(); ?>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group col-md-12" style="text-align: center;">
+			  			<?php // echo $this->formArchivo->getElement(Application_Form_Archivo::E_CARGAR)->renderViewHelper(); ?>
+					</div>
+				</div>
+
+				<div class="row" style="display: none;">
+					<?php // echo $this->formArchivo->getElement(Application_Form_Archivo::E_USUARIO)->setValue(Fmo_Model_Seguridad::getUsuarioSesion()->{Fmo_Model_Personal::SIGLADO}); ?>
+					<?php // echo $this->formArchivo->getElement(Application_Form_Archivo::E_CEDULA)->setValue(Fmo_Model_Seguridad::getUsuarioSesion()->cedula); ?>
+					<?php // echo $this->formArchivo->getElement(Application_Form_Archivo::E_PEDIDO)->setValue($this->pedido->numero_documento); ?>
+				</div>
+
+		  	</form>
+			
+			<br>
+
+		  	<div class="row">
+		        <div class="table-responsive col-md-12">
+		          	<table id="archivos" class="table table-striped table-bordered">
+			            <thead class="bg-gray">
+				            <tr>
+				            	<th class="text-center">Fecha</th>
+				              	<th class="text-center">Hora</th>
+				              	<th class="text-center">Cargado por</th>
+				              	<th class="text-center">Nombre</th>
+				              	<th class="text-center">Tamaño</th>
+				              	<th class="text-center">Descripción</th>
+				              	<th class="text-center">Opción</th>
+				            </tr>
+			            </thead>
+			            <tbody>
+			            </tbody>
+		          	</table>
+		        </div>
+		  	</div>
+
+	    </div>
+	</div> -->
+
+  	<!-- SECCION DE COMENTARIOS -->
+  	<!-- <div class="box">
+
+    	<div class="box-header bg-orange">
+		  	<h3 class="box-title">
+		      	<i class="fa fa-commenting"></i> Comentarios
+		  	</h3>
+    	</div>
+
+    	<div class="box-body">
+
+			<form role="form" action="#" method="post">
+
+				<label>Comentario</label>
+				<div class="input-group col-md-12" >
+					<?php //echo $this->formComentario->getElement(Application_Form_Comentario::E_COMENTARIO)->renderViewHelper(); ?>
+					<span class="input-group-btn">
+					  	<?php //echo $this->formComentario->getElement(Application_Form_Comentario::E_ENVIAR)->renderViewHelper(); ?>
+					</span>
+				</div>
+
+				<div class="row" style="display: none;">
+					<?php //echo $this->formComentario->getElement(Application_Form_Comentario::E_USUARIO)->setValue(Fmo_Model_Seguridad::getUsuarioSesion()->{Fmo_Model_Personal::SIGLADO}); ?>
+					<?php //echo $this->formComentario->getElement(Application_Form_Comentario::E_CEDULA)->setValue(Fmo_Model_Seguridad::getUsuarioSesion()->cedula); ?>
+					<?php //echo $this->formComentario->getElement(Application_Form_Comentario::E_PEDIDO)->setValue($this->pedido->numero_documento); ?>
+				</div>
+
+		  	</form>
+			<br>
+
+		  	<div class="row">
+		        <div class="table-responsive col-md-12">
+		          	<table id="comentarios" class="table table-striped table-bordered" >
+			            <thead class="bg-gray">
+				            <tr>
+				            	<th class="text-center">Opcion</th>
+				            	<th class="text-center">Fecha</th>
+				            	<th class="text-center">Hora</th>
+				              	<th class="text-center">Realizado por</th>
+				              	<th class="col-md-6 text-center">Comentario</th>
+				            </tr>
+			            </thead>
+			            <tbody>
+			            </tbody>
+		          	</table>
+		        </div>
+		  	</div>
+    	</div>
+
+  	</div> -->
+
+
+</section>
+
+
+<!------SCRIPTS------>
+<script type="text/javascript">
+
+	/*SECCION DE FUNCIONES PARA VALIDAR*/
+
+	/*funcion para los campos que sean solo digitos o numeros*/
+	function validarDigitos(evt){
+		var charCode = (evt.which) ? evt.which : event.keyCode
+		if (charCode > 31 && (charCode < 48 || charCode > 57))
+		return false;
+
+		return true;
+    }
+
+	/*funcion para los campo de tiempo de entrega*/
+	function vencimientoListener(){
+		//campos
+	    var txtTmpEntNumero = document.getElementById("txtTmpEntNumero");
+	    var txtTmpEntCiclo = document.getElementById("txtTmpEntCiclo");    
+	    var txtTmpEntTipo = document.getElementById("txtTmpEntTipo");    
+	    var fchProveedor = document.getElementById("fchProveedor");    
+	    var fchVencimiento = document.getElementById("fchVencimiento");    
+
+	    //Transformacion de txtTmpEntNumero a INTEGER
+	    var diaISO = parseInt(txtTmpEntNumero.value,10); 
+	    //transformacion de fecha para trabajar a estandar MM/DD/YYYY
+	    var fechaString = fchProveedor.value.toString();
+	    var fechaParts = fechaString.split("/");
+	    var fechaISO = new Date(fechaParts[2], fechaParts[1] - 1, +fechaParts[0]);
+	    //alert(fechaISO);
+
+	    if(txtTmpEntNumero.value.toString()!="" && txtTmpEntCiclo.value.toString()!="" && txtTmpEntTipo.value.toString()!="" && fchProveedor.value.toString()!=""){
+
+	    	if(txtTmpEntCiclo.value=="dia"){
+
+	    		if(txtTmpEntTipo.value=="continuo") {
+	    			fechaISO.setDate(fechaISO.getDate() + diaISO);
+	    		}
+
+	    		if(txtTmpEntTipo.value=="habil"){
+	    			var i = 0;
+					while (i < diaISO) {
+						fechaISO.setDate(fechaISO.getDate() + 1);
+						if (fechaISO.getDay() != 6 && fechaISO.getDay() != 0) i++;
+					}
+	    		}
+	    	} 
+
+	    	if(txtTmpEntCiclo.value=="semana"){
+	    		diaISO = diaISO*7;
+
+	    		if(txtTmpEntTipo.value=="continuo"){
+	    			fechaISO.setDate(fechaISO.getDate() + diaISO);
+	    		}	
+
+	    		if(txtTmpEntTipo.value=="habil"){
+	    			var i = 0;
+					while (i < diaISO) {
+						fechaISO.setDate(fechaISO.getDate() + 1);
+						if (fechaISO.getDay() != 6 && fechaISO.getDay() != 0) i++;
+					}
+	    		}	
+	    	}
+
+	    	if(txtTmpEntCiclo.value=="mes"){
+	    		diaISO = diaISO*30;
+
+	    		if(txtTmpEntTipo.value=="continuo"){
+	    			fechaISO.setDate(fechaISO.getDate() + diaISO);
+	    		}	
+
+	    		if(txtTmpEntTipo.value=="habil"){
+	    			var i = 0;
+					while (i < diaISO) {
+						fechaISO.setDate(fechaISO.getDate() + 1);
+						if (fechaISO.getDay() != 6 && fechaISO.getDay() != 0) i++;
+					}
+	    		}	
+	    	}
+
+	    	if(txtTmpEntCiclo.value=="año"){
+	    		diaISO = diaISO*360;
+
+	    		if(txtTmpEntTipo.value=="continuo"){
+	    			fechaISO.setDate(fechaISO.getDate() + diaISO);
+	    		}	
+
+	    		if(txtTmpEntTipo.value=="habil"){
+	    			var i = 0;
+					while (i < diaISO) {
+						fechaISO.setDate(fechaISO.getDate() + 1);
+						if (fechaISO.getDay() != 6 && fechaISO.getDay() != 0) i++;
+					}
+	    		}	
+	    	}
+
+
+	    	var dd = fechaISO.getDate();
+	    	var mm = fechaISO.getMonth()+1;
+	    	var yyyy = fechaISO.getFullYear();
+
+	    	fchVencimiento.value = dd+"/"+mm+"/"+yyyy;
+	    } else {
+	    	fchVencimiento.value = null;
+	    }
+
+	}
+
+	/*funcion para campos de fianza*/
+	function fianzaListener(){
+		//campos
+		var selFianza = document.getElementById("selFianza");
+	    var fchPagoAnticipo = document.getElementById("fchPagoAnticipo");
+	    var fchEntregaFianza = document.getElementById("fchEntregaFianza");    
+	    var fchAprobFianza = document.getElementById("fchAprobFianza");    
+	    var fchDevFianza = document.getElementById("fchDevFianza");
+		//form-group
+		var fechasFianza = document.getElementById("fechasFianza");
+
+		fechasFianza.setAttribute("style", "display: inline;");
+	    if(selFianza.value == "si")
+	    {
+	    	fechasFianza.setAttribute("style", "display: inline;");
+	    } else {
+			fchPagoAnticipo.value = null;
+			fchEntregaFianza.value = null;
+			fchAprobFianza.value = null;
+			fchDevFianza.value = null;
+	    	fechasFianza.setAttribute("style", "display: none;");
+	    }
+	}
+
+	/*funcion para los campos de compromiso de responsabilidad social*/
+	function crsListener(){
+		//campos
+		var selCrs = document.getElementById("selCompromiso");
+		var fchCompromiso = document.getElementById("fchCompromiso");
+		//form-group
+		var fechasCrs = document.getElementById("fchCompromisoCampo");
+
+		fechasCrs.setAttribute("style", "display: inline;");
+	    if(selCrs.value == "si")
+	    {
+	    	fechasCrs.setAttribute("style", "display: inline;");
+	    } else {
+	    	fchCompromiso.value = null;
+	    	fechasCrs.setAttribute("style", "display: none;");
+	    }
+	}
+
+	/*-------*/
+
+	//Datepickers para los campos con fechas
+	$(function () {
+    	//Date picker->Fecha de Firma del Proveedor
+    	$('#fchProveedor').datepicker({
+      		autoclose: true,
+      		format: 'dd/mm/yyyy',
+      		language: 'es'
+    	})
+
+    	//Date picker->Fecha Recepcion Pedido ACMA
+    	$('#fchRecepcion').datepicker({
+      		autoclose: true,
+      		format: 'dd/mm/yyyy',
+      		language: 'es'
+    	})
+
+    	//Date picker->Pago Anticipo
+    	$('#fchPagoAnticipo').datepicker({
+      		autoclose: true,
+      		format: 'dd/mm/yyyy',
+      		language: 'es'
+    	})
+
+    	//Date picker->Entrega de fianza
+    	$('#fchEntregaFianza').datepicker({
+      		autoclose: true,
+      		format: 'dd/mm/yyyy',
+      		language: 'es'
+    	})
+
+    	//Date picker->Aprobacion de fianza
+    	$('#fchAprobFianza').datepicker({
+      		autoclose: true,
+      		format: 'dd/mm/yyyy',
+      		language: 'es'
+    	})
+
+    	//Date picker->Devolucion de fianza
+    	$('#fchDevFianza').datepicker({
+      		autoclose: true,
+      		format: 'dd/mm/yyyy',
+      		language: 'es'
+    	})
+
+    	//Date picker->Pago al proveedor
+    	$('#fchPagoProveedor').datepicker({
+      		autoclose: true,
+      		format: 'dd/mm/yyyy',
+      		language: 'es'
+    	})
+
+    	//Date picker->Fecha de CRS
+    	$('#fchCompromiso').datepicker({
+      		autoclose: true,
+      		format: 'dd/mm/yyyy',
+      		language: 'es'
+    	})
+
+    	//Date picker->Fecha de Remision Evaluacion
+    	$('#fchEval').datepicker({
+      		autoclose: true,
+      		format: 'dd/mm/yyyy',
+      		language: 'es'
+    	})
+
+    	//Date picker->Fecha de Remision Evaluacion
+    	$('#fchEvaluacion').datepicker({
+      		autoclose: true,
+      		format: 'dd/mm/yyyy',
+      		language: 'es'
+    	})
+
+    	//Date picker->Fecha de Remision Evaluacion
+    	$('#fchRemEvaluacion').datepicker({
+      		autoclose: true,
+      		format: 'dd/mm/yyyy',
+      		language: 'es'
+    	})
+	});
+	/*FIN DE SECCION DE FUNCIONES PARA VALIDAR*/
+
+
+
+	//formato de fecha europea
+  	jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+	    "date-uk-pre": function ( a ) {
+	        var ukDatea = a.split('/');
+	        return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
+	    },
+
+	    "date-uk-asc": function ( a, b ) {
+	        return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+	    },
+
+	    "date-uk-desc": function ( a, b ) {
+	        return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+	    }
+  	});
+
+	$(document).ready(
+  		function() {
+	        $('#modificaciones').DataTable({
+				language: {
+					"decimal": "",
+					"emptyTable": "No hay información",
+					"info": "<pre>Mostrando _START_ a _END_ de <b>_TOTAL_</b> Registros</pre>",
+					"infoEmpty": "<pre>Mostrando 0 a 0 de <b>0</b> Registros</pre>",
+					"infoFiltered": "(Filtrado de _MAX_ total entradas)",
+					"infoPostFix": "",
+					"thousands": ",",
+					"lengthMenu": "Mostrar _MENU_ Entradas",
+					"loadingRecords": "Cargando...",
+					"processing": "Procesando...",
+					"search": "Buscar",
+					"zeroRecords": "Sin información encontrada",
+					"paginate": {
+						"first": "Primero",
+						"last": "Ultimo",
+						"next": "Siguiente",
+						"previous": "Anterior"
+					}
+				},
+          		lengthChange: false,
+          		searching: false,
+	          	ajax: {
+	            	url: '<?php echo $this->url(array('controller' => 'ajax', 'action' => 'getmodificacionespedido', 'pedido' => $this->pedido->numero_documento)); ?>',
+	            	dataSrc: '',
+	          	},
+	          	columns: [
+		            { 	
+		            	data: 'fecha',
+		            	className: 'text-center',
+		            	type: 'date-uk',
+		              	orderable: false,
+		        	},
+		            { 	
+		            	data: 'hora',
+		            	className: 'text-center',
+		              	orderable: false
+		        	},
+		            { 	
+		            	data: 'modificado_por',
+		            	className: 'text-center',
+		              	orderable: false
+		        	},	          	
+		            { 	
+		            	data: 'campo',
+		            	className: 'text-center',
+		              	orderable: false
+		        	},
+		            {
+		              	data: 'modificacion',
+		              	orderable: false
+		            }
+	          	],
+          		order: [[ 0, 'desc' ], [ 1, 'desc' ]]
+	        });
+
+	    }
+    );
+
+
+	$(document).ready(
+  		function() {
+	        $('#posiciones').DataTable({
+				language: {
+					"decimal": "",
+					"emptyTable": "No hay información",
+					"info": "<pre>Mostrando _START_ a _END_ de <b>_TOTAL_</b> Registros</pre>",
+					"infoEmpty": "<pre>Mostrando 0 a 0 de <b>0</b> Registros</pre>",
+					"infoFiltered": "(Filtrado de _MAX_ total entradas)",
+					"infoPostFix": "",
+					"thousands": ",",
+					"lengthMenu": "Mostrar _MENU_ Entradas",
+					"loadingRecords": "Cargando...",
+					"processing": "Procesando...",
+					"search": "Buscar",
+					"zeroRecords": "Sin información encontrada",
+					"paginate": {
+						"first": "Primero",
+						"last": "Ultimo",
+						"next": "Siguiente",
+						"previous": "Anterior"
+					}
+				},
+	          	lengthChange: false,
+	          	ajax: {
+	            	url: '<?php echo $this->url(array('controller' => 'ajax', 'action' => 'getposicionespedido', 'id' => $this->pedido->numero_documento)); ?>',
+	            	dataSrc: '',
+	          	},
+	          	columns: [
+		            { 	data: 'posicion',
+		            	className: 'text-center',
+		              	orderable: false,
+		        	},
+		            {
+		              	data: 'descripcion',
+		              	orderable: false,
+		            },
+		            {
+		              	data: 'neto',
+		              	orderable: false,
+	             	  	render: function (data, type, row, meta) {
+		              		return '<?php echo $this->pedido->moneda ?> ' + data
+		              	}
+		            },
+		            {
+		              	data: 'subtotal',
+		              	orderable: false,
+	               	  	render: function (data, type, row, meta) {
+		              		return '<?php echo $this->pedido->moneda ?> ' + data
+		              	}
+		            },
+                    {
+		              	orderable: false,
+		              	className: 'text-center',
+		              	render: function (data, type, row, meta) { 
+							return '<a class="fa fa-compass fa-2x" href="<?php echo $this->baseUrl('default/seguimiento/editarposicion') ?>/id/'+row.nro_pedido+'/pos/'+row.posicion+'/dep/'+row.departamento+'/des/'+row.descripcion+'" title="Seguimiento"></a>';
+      		                //return '<a class="fa fa-compass fa-2x" href="editarposicion/id/'+row.nro_pedido+'/pos/'+row.posicion+'/dep/'+row.departamento+'/des/'+row.descripcion+'" title="Seguimiento"></a>';
+		              	}
+		            }
+	          	],
+	          	order: [[0, 'asc']]
+	        });
+	        
+	    }
+    );
+
+	$(document).ready(
+  		function() {
+	        $('#archivos').DataTable({
+				language: {
+					"decimal": "",
+					"emptyTable": "No hay información",
+					"info": "<pre>Mostrando _START_ a _END_ de <b>_TOTAL_</b> Registros</pre>",
+					"infoEmpty": "<pre>Mostrando 0 a 0 de <b>0</b> Registros</pre>",
+					"infoFiltered": "(Filtrado de _MAX_ total entradas)",
+					"infoPostFix": "",
+					"thousands": ",",
+					"lengthMenu": "Mostrar _MENU_ Entradas",
+					"loadingRecords": "Cargando...",
+					"processing": "Procesando...",
+					"search": "Buscar",
+					"zeroRecords": "Sin información encontrada",
+					"paginate": {
+						"first": "Primero",
+						"last": "Ultimo",
+						"next": "Siguiente",
+						"previous": "Anterior"
+					}
+				},
+          		lengthChange: false,
+          		searching: false,
+	          	ajax: {
+	            	url: '<?php echo $this->url(array('controller' => 'ajax', 'action' => 'getarchivospedido', 'id' => $this->pedido->numero_documento)); ?>',
+	            	dataSrc: '',
+	          	},
+	          	columns: [
+		            { 	
+		            	data: 'fecha',
+		            	className: 'text-center',
+		              	orderable: false
+		        	},
+		            { 	
+		            	data: 'hora',
+		            	className: 'text-center',
+		              	orderable: false
+		        	},	          	
+		            { 	
+		            	data: 'siglado',
+		            	className: 'text-center',
+		              	orderable: false
+		        	},
+		            {
+		              	data: 'nombre',
+		              	className: 'text-center',
+		              	orderable: false
+		            },
+		            {
+		              	data: 'tamano',
+		              	className: 'text-center',
+		              	orderable: false
+		            },
+		            {
+		              	data: 'descripcion',
+		              	className: 'text-center',
+		              	orderable: false
+		            },
+                    {
+		              	data: 'id',
+		              	orderable: false,
+		              	className: 'text-center',
+		              	render: function (data, type, row, meta) { //Solo importa data
+		                	return '<a class="fa fa-download fa-2x" title="Descargar" href="descargar?id='+data+'"></a>'+
+		                	'<a class="fa fa-close fa-2x" title="Eliminar" href="#"></a>';
+		              	}
+		            }
+	          	],
+	          	order: [[ 0, 'desc' ], [ 1, 'desc' ]]
+	        });
+
+	    }
+    );
+
+
+	$(document).ready(
+  		function() {
+	        $('#comentarios').DataTable({
+				language: {
+					"decimal": "",
+					"emptyTable": "No hay información",
+					"info": "<pre>Mostrando _START_ a _END_ de <b>_TOTAL_</b> Registros</pre>",
+					"infoEmpty": "<pre>Mostrando 0 a 0 de <b>0</b> Registros</pre>",
+					"infoFiltered": "(Filtrado de _MAX_ total entradas)",
+					"infoPostFix": "",
+					"thousands": ",",
+					"lengthMenu": "Mostrar _MENU_ Entradas",
+					"loadingRecords": "Cargando...",
+					"processing": "Procesando...",
+					"search": "Buscar",
+					"zeroRecords": "Sin información encontrada",
+					"paginate": {
+						"first": "Primero",
+						"last": "Ultimo",
+						"next": "Siguiente",
+						"previous": "Anterior"
+					}
+				},
+	          	lengthChange: false,
+	          	searching: false,
+	          	ajax: {
+	            	url: '<?php echo $this->url(array('controller' => 'ajax', 'action' => 'getcomentariospedido', 'id' => $this->pedido->numero_documento)); ?>',
+	            	dataSrc: '',
+	          	},
+	          	columns: [
+	          		{
+	          			data: 'id',
+		              	orderable: false,
+		              	className: 'text-center',
+		              	render: function (data, type, row, meta) { 
+      		                return '<form method="POST" action="#" role="form">'+
+							  '<input type="hidden" id="txtId" name="txtId" value="'+data+'">'+
+							  '<button type="submit" id="btnEliminar" name="btnEliminar" style="background: none; padding: 0px; border: none;">'+
+							  '<i class="fa fa-close fa-2x" ></i>'+
+							  '</button>'+
+							'</form>'; 
+		              	}
+		            },
+		            { 	
+		            	data: 'fecha',
+		            	className: 'text-center',
+		            	type: 'date-uk',
+		              	orderable: false,
+		        	},
+		            { 	
+		            	data: 'hora',
+		            	className: 'text-center',
+		              	orderable: false,
+		        	},
+		            { 	
+		            	data: 'usuario',
+		            	className: 'text-center',
+		              	orderable: false,
+		        	},
+		            {
+		              	data: 'comentario',
+		              	orderable: false,
+		            }
+	          	],
+	          	order: [[ 1, 'desc' ], [ 2, 'desc' ]]
+	        });
+
+	    }
+    );
+
+	
+
+	//Funcion para retroceder a la pagina anterior
+	function goBack() {
+	  	window.history.back()
+	}
+</script>

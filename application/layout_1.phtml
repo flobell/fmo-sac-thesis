@@ -1,0 +1,321 @@
+<?php
+
+/**
+ * Layout de adminLTE 
+ * @author Pedro Flores
+ */
+
+try {
+    $sistema = Zend_Registry::get('sistema');
+    $auth = Zend_Auth::getInstance();
+    if ($auth->hasIdentity()):
+        $usuario = Fmo_Model_Seguridad::getUsuarioSesion();
+        $sesion = $auth->getStorage()->read();
+    endif;    
+    $hoy = new Zend_Date();
+
+    // inserta la hoja de estilo en cascada CSS
+    foreach ($sistema['css'] as $media => $archivos):
+        foreach ($archivos as $archivo):
+            $this->headLink()
+                 ->appendStylesheet($this->baseUrl($archivo), $media);
+        endforeach;
+    endforeach;
+    
+    /* inserta el favicon
+    $this->headLink()
+        ->headLink(array('rel' => 'shortcut icon', 'href' => $this->baseUrl($sistema['favicon'])), Zend_View_Helper_Placeholder_Container_Abstract::PREPEND);*/
+
+    //inserta hojas de estilo css de adminLTE 
+    foreach ($sistema['css_lte'] as $k):
+      $this->headLink()
+        ->headLink(array('rel' => 'stylesheet','href' => $this->baseUrl($k)));
+    endforeach;
+
+     //inserta los javascript
+    foreach ($sistema['js'] as $k):
+        $this->headScript()
+             ->prependFile($this->baseUrl($k));
+    endforeach;
+
+    // inserta los javascript de adminLTE
+    foreach ($sistema['js_lte'] as $k):
+      $this->headScript()
+             ->appendFile($this->baseUrl($k));
+    endforeach;
+
+    echo $this->doctype(), PHP_EOL,
+         '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es">', PHP_EOL,
+         '<head>', PHP_EOL;
+
+    $this->headTitle($sistema['titulo'] . ' (' . strtoupper($sistema['siglado']) . ')');
+    if ($auth->hasIdentity()):
+        $this->headTitle(Fmo_Model_Seguridad::getSiglado($auth));
+    endif;
+    
+    if (isset($sistema['version'])):
+        $this->headTitle('v' . $sistema['version']);
+    endif;
+
+    echo $this->headTitle()
+              ->setSeparator(' :: '), PHP_EOL,
+         $this->headMeta()
+              ->setName('viewport', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
+              ->appendHttpEquiv('Content-Language', $sistema['meta']['contentLanguage'])
+              ->appendHttpEquiv('Content-Type', 'text/html; charset=UTF-8')
+              ->appendHttpEquiv('X-UA-Compatible', 'IE=edge,chrome=1'), PHP_EOL,
+         $this->headLink(), PHP_EOL,
+         $this->headStyle(), PHP_EOL,
+         $this->jQuery(), PHP_EOL,
+         $this->jQueryX(), PHP_EOL,
+         $this->bootstrap(), PHP_EOL,
+         $this->dataTables(), PHP_EOL,
+         $this->select2(), PHP_EOL,
+         $this->highCharts(), PHP_EOL,
+         $this->headScript(), PHP_EOL,
+         $this->inlineScript(), PHP_EOL,
+         '</head>', PHP_EOL;
+
+
+    //###############################PLANTILLA ADMINLTE#####################################     
+    echo '<body class="hold-transition fixed skin-yellow sidebar-mini sidebar-collapse">',PHP_EOL;
+    echo '<div class="wrapper">',PHP_EOL;
+    
+    //HEADER
+    echo '<div class="main-header">',PHP_EOL;
+    
+    //LOGO
+    echo 
+    '<a href="http://portal:1020/principal/" class="logo">',PHP_EOL,
+    '<span>',PHP_EOL,
+    $this->img('ico_fmo.png'),
+    '<b> Intranet</b>',PHP_EOL,
+    '</span>',PHP_EOL,
+    '</a>',PHP_EOL;    
+
+    //NAVBAR
+    echo '<div class="navbar navbar-static-top" role="navigation">',PHP_EOL;
+
+    //NAVBAR --> TOGGLE BUTTON
+    echo '<a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">',PHP_EOL;
+    echo '<span class="sr-only">',PHP_EOL;
+    echo 'Palanca de navegacion',PHP_EOL;
+    echo '</span>',PHP_EOL;
+    echo '</a>',PHP_EOL;
+
+    //NAVBAR --> RIGHT MENU
+    echo '<div class="navbar-custom-menu">',PHP_EOL;
+    echo '<ul class="nav navbar-nav">',PHP_EOL;
+
+    if ($auth->hasIdentity()):
+/*
+        if (isset($sistema['notificacion']['informacion']) and $sistema['notificacion']['informacion']):
+
+              $number = Fmo_Model_Notification::countUnRead();
+              $formatNumber = Zend_Locale_Format::toInteger($number);
+              $title = '';
+              if ($number == 0):
+                  $title .= 'No tiene notificaciones sin leer';
+              elseif ($number == 1):
+                  $title .= 'Tiene una notificación sin leer';
+              elseif ($number >= 2 and $number <= 10):
+                  $title .= 'Tiene ' . Fmo_Util::numberToWords($number) . ' notificaciones sin leer';
+              else:
+                  $title .= "Tiene $formatNumber notificaciones sin leer";
+              endif;
+
+          //NAVBAR --> RIGHT MENU --> NOTIFICACIONES
+          echo '<li class="dropdown notifications-menu">',PHP_EOL;
+            echo '<a href="',$this->url(array('module' => 'fmo', 'controller' => 'notification', 'action' => 'index', 'backUrl' => $this->urlVolver(FALSE)), NULL, TRUE),'" title="',$this->escape($title), '" >',PHP_EOL;
+              echo '<i class="fa fa-bell-o"></i>',PHP_EOL;
+              echo '<span class="label label-danger">',$formatNumber,'</span>',PHP_EOL;
+            echo '</a>',PHP_EOL;
+          echo '</li>',PHP_EOL;
+        endif;
+*/
+        //NAVBAR --> RIGHT MENU --> USUARIO
+        echo '<li class="dropdown user user-menu">',PHP_EOL,
+          '<a href="#" class="dropdown-toggle" data-toggle="dropdown">',PHP_EOL,
+            '<i class="glyphicon glyphicon-user"></i>',PHP_EOL,
+              '<b>',PHP_EOL,
+                ucwords(strtolower($usuario->apellido)),', ',ucwords(strtolower($usuario->nombre)),' / FMO ',ucwords(strtolower($usuario->ficha)),PHP_EOL,
+              '</b>',PHP_EOL,
+          '</a>',PHP_EOL,
+          '<ul class="dropdown-menu">',PHP_EOL,
+              '<li class="user-footer">',PHP_EOL,
+                '<div class="text-center">',PHP_EOL,
+                  '<button type="button" class="btn btn-default btn-flat" data-toggle="modal" data-target="#modal-usuario">',PHP_EOL,
+                    'Perfil',PHP_EOL,
+                  '</button>',PHP_EOL,
+                '</div>',PHP_EOL,
+            '</li>',PHP_EOL,
+          '</ul>',PHP_EOL,
+        '</li>',PHP_EOL;
+
+        ////NAVBAR --> RIGHT MENU --> Fecha y Hora
+        $urlCalendario = $this->url(array('module' => 'fmo', 'controller' => 'calendario', 'action' => 'index', 'volver' => $this->urlVolver(false)), null, true);
+        echo '<li class="dropdown messages-menu">',PHP_EOL;
+          echo '<a href="'.$urlCalendario.'" title="Ver calendario">',PHP_EOL;
+            echo '<i class="glyphicon glyphicon-calendar"></i>',PHP_EOL;
+              echo '<b>',PHP_EOL;
+              echo ucwords($hoy->get(Zend_Date::WEEKDAY_SHORT)),' ',ucwords($hoy->get(Zend_Date::DAY_SHORT)),' de ',ucwords($hoy->get(Zend_Date::MONTH_NAME_SHORT)),', ',ucwords($hoy->get(Zend_Date::HOUR_SHORT_AM)), ':',ucwords($hoy->get(Zend_Date::MINUTE)), ' ',ucwords(strtoupper($hoy->get(Zend_Date::MERIDIEM))),PHP_EOL;               
+              echo '</b>',PHP_EOL;   
+          echo '</a>',PHP_EOL;
+        echo '</li>',PHP_EOL;
+
+        $url = $this->url(array('module' => 'fmo', 'controller' => 'autenticacion', 'action' => 'desconectarse'), null, true);
+        echo '<li>',PHP_EOL;
+        echo '<a class="glyphicon glyphicon-log-out" href="'.$url.'" title="Cerrar sesión">',PHP_EOL;
+        echo '</a>',PHP_EOL;
+        echo '</li>',PHP_EOL;
+
+    endif;
+
+
+    echo '</ul>',PHP_EOL;
+    echo '</div>',PHP_EOL;
+    echo '</div>',PHP_EOL;
+    echo '</div>',PHP_EOL; //HEADER//FIN
+
+
+    //COLUMNA IZQUIERDA
+    echo '<div class="main-sidebar">',PHP_EOL;
+      echo '<div class="sidebar">',PHP_EOL;
+        //COLUMNA IZQUIERDA -> BARRA DE NAVEGACION
+        echo '<ul class="sidebar-menu" data-widget="tree">',PHP_EOL;
+        echo '</ul>',PHP_EOL;
+
+        echo $this->adminMenu($this->navigation()->getContainer());
+
+      echo '</div>',PHP_EOL;
+    echo '</div>',PHP_EOL;
+
+
+    //MODAL DE INFORMACION DE USUARIO
+    if ($auth->hasIdentity()):
+    echo '<div class="modal fade" id="modal-usuario">',PHP_EOL;
+        echo '<div class="modal-dialog">',PHP_EOL;
+            echo '<div class="modal-content">',PHP_EOL;
+
+                echo '<div class="modal-header">',PHP_EOL;
+                echo '<h4 class="modal-title text-center"><b>INFORMACIÓN DE USUARIO</b></h4>',PHP_EOL;
+                echo '</div>',PHP_EOL;
+
+                echo '<div class="modal-body">',PHP_EOL;
+
+                    //BOX INFORMACION PERSONAL
+                    echo '<div class="box">',PHP_EOL;
+                        echo '<div class="box-header bg-orange">',PHP_EOL;
+                        echo '<h3 class="box-title"><b>DATOS PERSONALES</b></h3>',PHP_EOL;
+                    echo '</div>',PHP_EOL;
+
+                    echo '<div class="box-body no-padding">',PHP_EOL;
+                        echo '<table class="table table-condensed table-bordered">',PHP_EOL;
+                        echo '<tr><td class="text-right col-sm-3"><b>Cédula</b></td><td>',$usuario->cedula,'</td></tr>',PHP_EOL;
+                        echo '<tr><td class="text-right col-sm-3"><b>Nombre</b></td><td>',$usuario->nombre.' '.$usuario->apellido,'</td></tr>',PHP_EOL;
+                        echo '<tr><td class="text-right col-sm-3"><b>Género</b></td><td>',$usuario->sexo,'</td></tr>',PHP_EOL;
+                        echo '<tr><td class="text-right col-sm-3"><b>F. Nacimiento</b></td><td>',substr($usuario->fecha_nacimiento, 0, 10),'</td></tr>',PHP_EOL;
+                        echo '<tr><td class="text-right col-sm-3"><b>Edad</b></td><td>',$usuario->edad,'</td></tr>',PHP_EOL;
+                        echo '</table>',PHP_EOL;
+                    echo '</div>',PHP_EOL;
+                echo '</div>',PHP_EOL;
+
+                    //BOX INFORMACION LABORAl
+                echo '<div class="box">',PHP_EOL;
+                    echo '<div class="box-header bg-orange">',PHP_EOL;
+                        echo '<h3 class="box-title"><b>DATOS LABORALES</b></h3>',PHP_EOL;
+                    echo '</div>',PHP_EOL;
+
+                    echo '<div class="box-body no-padding">',PHP_EOL;
+                        echo '<table class="table table-condensed table-bordered">',PHP_EOL;
+                        echo '<tr><td class="text-right col-sm-3"><b>Ficha</b></td><td>',$usuario->ficha,'</td></tr>',PHP_EOL;
+                        echo '<tr><td class="text-right col-sm-3"><b>Cargo</b></td><td>',$usuario->cargo,'</td></tr>',PHP_EOL;
+                        echo '<tr><td class="text-right col-sm-3"><b>F. Ingreso</b></td><td>',substr($usuario->fecha_ingreso, 0, 9),'</td></tr>',PHP_EOL;
+                        echo '<tr><td class="text-right col-sm-3"><b>Antigüedad</b></td><td>',$usuario->antiguedad,'</td></tr>',PHP_EOL;
+                        echo '<tr><td class="text-right col-sm-3"><b>Nómina</b></td><td>',$usuario->nomina,'</td></tr>',PHP_EOL;
+                        echo '<tr><td class="text-right col-sm-3"><b>Unidad Organizativa</b></td>',PHP_EOL;
+                        echo '<td>',PHP_EOL;
+                        foreach (array_reverse($usuario->organigrama) as $costo) { 
+                            echo '<pre>',$costo->centro_costo.'<br>';
+                        } 
+                        echo '</pre></pre></pre>',PHP_EOL;
+                        echo '</td></tr>',PHP_EOL;
+                        echo '<tr><td class="text-right col-sm-3"><b>Correo</b></td><td>',$usuario->correo_electronico,'</td></tr>',PHP_EOL;
+                        echo '</table>',PHP_EOL;
+                    echo '</div>',PHP_EOL;
+                echo '</div>',PHP_EOL;
+            echo '</div>',PHP_EOL;
+
+            echo '<div class="modal-footer">',PHP_EOL;
+                    echo '<button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Cerrar</button>',PHP_EOL;
+                    echo '</div>',PHP_EOL;
+            echo '</div>',PHP_EOL;
+        echo '</div>',PHP_EOL;
+    echo '</div>',PHP_EOL;
+    endif; 
+
+    //CONTENEDOR
+    echo '<div class="content-wrapper">',PHP_EOL;
+      //CONTENERDOR --> HEADER
+      echo '<div class="content-header" style=" background: none repeat scroll 0% 0% #FFF; border-bottom: 1px solid #D2D6DE;">',PHP_EOL;
+        echo '<h6>',PHP_EOL;
+
+      $migas = $this->navigation()
+                    ->breadcrumbs()
+                    ->setLinkLast(FALSE)
+                    ->setMinDepth(0)
+                    ->render();
+
+      echo '<style>',PHP_EOL,
+        'div.breadcontainer { pointer-events: none; }',PHP_EOL,
+        'div.breadcontainer a{ color: #777; }',PHP_EOL,
+      '</style>',PHP_EOL;
+
+      echo '<div class="breadcontainer">',PHP_EOL,
+        '<ol class="breadcrumb">',PHP_EOL,   
+          '<li><i class="fa fa-dashboard"></i><b> Modulo</b></li>',PHP_EOL,   
+          '<li class="active">',$migas,'</li>',PHP_EOL,   
+        '</ol>',PHP_EOL,
+      '</div>',PHP_EOL;
+
+        echo '</h6>',PHP_EOL;               
+      echo'</div>',PHP_EOL;
+
+            //CONTENEDOR --> CONTENIDO
+      echo '<div class="content">',PHP_EOL;
+        if (!$this->layout()->noShowFlashMessenger):
+          echo $this->flashMessenger(), PHP_EOL;
+        endif;
+        echo $this->layout()->content, PHP_EOL;
+      echo '</div>',PHP_EOL;
+
+    echo '</div>';
+    
+      //PIE DE PAGINA
+    echo '<div class="main-footer">',PHP_EOL;
+      echo '<div class="pull-right hidden-xs">',PHP_EOL;
+        echo '<b>Powered By</b>',PHP_EOL;
+        echo '<a href="https://framework.zend.com/">',PHP_EOL;
+          echo $this->img('zflogo.png', array('alt' => 'Logo Zend Framework')),PHP_EOL;
+        echo '</a>',PHP_EOL;
+        echo '<b>v',Zend_Version::VERSION,'</b>',PHP_EOL;
+      echo '</div>',PHP_EOL;
+      echo '<strong>',PHP_EOL;
+        echo 'Copyright '; 
+        echo '<i class="fa fa-copyright"></i>',PHP_EOL;
+        echo '2019',PHP_EOL;
+        echo '<a href="http://intranet/">',PHP_EOL;
+          echo '<b>CVG Ferrominera Orinoco.</b>',PHP_EOL;
+        echo '</a>',PHP_EOL;
+      echo '</strong>',PHP_EOL; 
+      echo '<b>Todos los derechos reservados.</b>',PHP_EOL;
+    echo '</div>',PHP_EOL;
+
+    echo '</div>',PHP_EOL;
+    echo '</body>',PHP_EOL;
+    //PLANTILLA ADMINLTE FIN
+
+    echo '</html>', PHP_EOL;
+} catch (Exception $e) {
+    echo '<pre>', htmlentities($e->getMessage(), ENT_COMPAT | ENT_XHTML), '</pre>', PHP_EOL;
+}

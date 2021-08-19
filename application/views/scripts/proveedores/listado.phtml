@@ -1,0 +1,141 @@
+<div style="margin: auto; width: 70%;">
+	<div class="box ">
+	  <!-- box-header -->
+	  <div class="box-header bg-orange">
+	    <h3 class="box-title"><b>LISTADO DE PROVEEDORES</b></h3>
+	  </div>
+	  <!-- /.box-header -->
+	  <div class="box-body table-responsive">
+
+	    <table id="proveedores" class="display general table-hover table-striped table-bordered nowrap compact">
+	      <thead class="bg-gray">
+	        <tr>
+	          <th class="text-center">Codigo</th>
+	          <th class="text-center">Nombre</th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	      </tbody>
+	    </table>
+	  </div>
+	  <!-- /.box-body -->
+	</div>
+</div>
+
+<script>
+	function format ( d ) {
+
+		var rif = d.rif?d.rif:"";
+		var fch_inscripcion = d.fch_inscripcion?d.fch_inscripcion:"";
+		var estado = d.estado?d.estado:"";
+		var ciudad = d.ciudad?d.ciudad:"";
+		var direccion = d.direccion?d.direccion:"";
+		var correo = d.correo?d.correo:"";
+		var rprs_legal = d.rprs_legal?d.rprs_legal:"";
+		var tlf1 = d.tlf1?d.tlf1:"";
+		var tlf2 = d.tlf2?d.tlf2:"";
+
+	    return '<div class="box-body table-responsive ">'+
+	    	'<table class="table table-bordered">'+
+		        '<tr style="border-bottom: 1px solid #EEE;">'+
+		            '<td class="col-md-3"><b>RIF:</b></td>'+
+		            '<td class="col-md-9">'+rif+'</td>'+
+		        '</tr>'+
+		        '<tr style="border-bottom: 1px solid #EEE;">'+
+		            '<td class="col-md-3"><b>Fecha de inscripción:</b></td>'+
+		            '<td class="col-md-9">'+fch_inscripcion+'</td>'+
+		        '</tr>'+
+		        '<tr style="border-bottom: 1px solid #EEE;">'+
+		            '<td class="col-md-3"><b>Estado:</b></td>'+
+		            '<td class="col-md-9">'+estado+'</td>'+
+		        '</tr>'+
+		        '<tr style="border-bottom: 1px solid #EEE;">'+
+		            '<td class="col-md-3"><b>Ciudad:</b></td>'+
+		            '<td class="col-md-9">'+ciudad+'</td>'+
+		        '</tr>'+
+		        '<tr style="border-bottom: 1px solid #EEE;">'+
+		            '<td class="col-md-3"><b>Dirección:</b></td>'+
+		            '<td class="col-md-9">'+direccion+'</td>'+
+		        '</tr>'+
+		        '<tr style="border-bottom: 1px solid #EEE;">'+
+		            '<td class="col-md-3"><b>Correo:</b></td>'+
+		            '<td class="col-md-9">'+correo+'</td>'+
+		        '</tr>'+
+		        '<tr style="border-bottom: 1px solid #EEE;">'+
+		            '<td class="col-md-3"><b>Representante Legal:</b></td>'+
+		            '<td class="col-md-9">'+rprs_legal+'</td>'+
+		        '</tr>'+
+		        '<tr style="border-bottom: 1px solid #EEE;">'+
+		            '<td class="col-md-3"><b>Telefono 1:</b></td>'+
+		            '<td class="col-md-9">'+tlf1+'</td>'+
+		        '</tr>'+
+		        '<tr style="border-bottom: 1px solid #EEE;">'+
+		            '<td class="col-md-3"><b>Telefono 2:</b></td>'+
+		            '<td class="col-md-9">'+tlf2+'</td>'+
+		        '</tr>'+
+	    	'</table>'+
+	    '</div>';
+	}
+
+	$(document).ready(
+  		function() {
+	        var proveedores = $('#proveedores').DataTable({
+				language: {
+					"decimal": "",
+					"emptyTable": "No hay información",
+					"info": "<pre>Mostrando _START_ a _END_ de <b>_TOTAL_</b> Registros</pre>",
+					"infoEmpty": "<pre>Mostrando 0 a 0 de <b>0</b> Registros</pre>",
+					"infoFiltered": "(Filtrado de _MAX_ total entradas)",
+					"infoPostFix": "",
+					"thousands": ",",
+					"lengthMenu": "Mostrar _MENU_ Entradas",
+					"loadingRecords": "Cargando...",
+					"processing": "Procesando...",
+					"search": "Buscar",
+					"zeroRecords": "Sin información encontrada",
+					"paginate": {
+						"first": "Primero",
+						"last": "Ultimo",
+						"next": "Siguiente",
+						"previous": "Anterior"
+					}
+				},
+	          	lengthChange: false,
+	          	ajax: {
+	            	url: '<?php echo $this->url(array('controller' => 'ajax', 'action' => 'getproveedores')); ?>',
+	            	dataSrc: '',
+	          	},
+	          	columns: [
+		            { 	
+		            	data: 'cod_prov',
+		              	orderable: false,
+		              	className: 'details-control text-center'
+		        	},
+		            {
+		              	data: 'nombre',
+		              	orderable: false,
+		              	className: 'details-control'
+		            }
+	          	],
+	          	order: [[0, 'asc']]
+	        });
+
+		    $('#proveedores tbody').on('click', 'td.details-control', function () {
+		        var tr = $(this).closest('tr');
+		        var row = proveedores.row( tr );
+		 
+		        if ( row.child.isShown() ) {
+		            // This row is already open - close it
+		            row.child.hide();
+		            tr.removeClass('shown');
+		        }
+		        else {
+		            // Open this row
+		            row.child( format(row.data()) ).show();
+		            tr.addClass('shown');
+		        }
+		    });
+
+	    }
+    );
+</script>

@@ -1,0 +1,9 @@
+<?php
+    $sistema = Zend_Registry::get('sistema');
+?>
+<h1 style="text-transform: uppercase; text-align: center;">
+    <?php echo /*$this->escape($sistema['titulo'])*/'SISTEMA DE ADMINISTRACIÓN DE COMPRA DE BIENES', ' (', $this->escape($sistema['siglado']), ')'; ?>
+</h1>
+<p style="margin-left: 10px; margin-right: 10px; text-align: center;" >
+    <?php echo $this->img('imgCompras.png', array('alt' => 'SAC', 'width' => '500', 'height' => '500')); ?>
+</p>

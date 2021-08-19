@@ -1,0 +1,240 @@
+<section class="invoice" style="width: 50%; margin: 0 auto;">
+
+	<div class="row">
+		<div class="col-md-12 text-center">
+
+	  		<a type="button" href="javascript:window.history.go(-1);" class="btn btn-primary btn-flat" >
+	    		<i class="fa fa-arrow-left"></i> Volver
+	  		</a>
+
+		</div>
+	</div>
+
+	</br>
+
+	<div class="box">
+		
+    	<div class="box-header bg-orange">
+		  	<h3 class="box-title">
+		      	<i class="glyphicon glyphicon-list-alt"></i> Seguimiento de Posición
+		  	</h3>
+    	</div>
+
+		<div class="box-body">
+
+		  	<!-- info row -->
+		  	<div class="row invoice-info" >
+			    <div class="box-body with-border">
+
+			    	<div class="row">
+
+						<div class="form-group col-md-12">
+				    		<div class="form-group col-md-6">
+				              	<label>Posición</label>
+				              	<input class="form-control" disabled="" type="text" value="<?php echo $this->pos ?>"></input>
+				            </div>
+
+				    		<div class="form-group col-md-6 ">
+				              	<label>Nro. Documento</label>
+				              	<input class="form-control" disabled="" type="text" value="<?php echo $this->id ?>"></input>
+				            </div>
+
+				    		<div class="form-group col-md-12 ">
+				              	<label>Descripcion</label>
+				              	<input class="form-control" disabled="" type="text" value="<?php echo $this->des ?>"></input>
+				            </div>		
+			        	</div>
+
+		        	</div>
+
+		        	<form role="form" action="#" method="POST">
+
+		        		<div class="row ">
+
+			    	    	<div class="form-group col-md-12" <?php if ($this->dep=='NACIONAL') echo 'style="display: none";'; ?> >
+
+					    		<div class="form-group col-md-6">
+					              	<label>Fecha de Entrega - Despachador</label>
+					                <div class="input-group date">
+					                  	<div class="input-group-addon">
+					                    	<i class="fa fa-calendar"></i>
+					                  	</div>
+				              			<input class="form-control" disabled="" type="text" value="<?php if($this->segPedido) $this->segPosicion->fch_entrega_desp ?>"></input>
+					                </div>
+					                <span class="hint">Formato: DD/MM/AAAA</span>
+					            </div>
+
+					    		<div class="form-group col-md-6">
+					              	<label>Fecha de Embarque</label>
+					                <div class="input-group date">
+			                  			<div class="input-group-addon">
+				                    		<i class="fa fa-calendar"></i>
+				                  		</div>
+				              			<input class="form-control" disabled="" type="text" value="<?php if($this->segPedido) $this->segPosicion->fch_embarque ?>"></input>
+					                </div>
+				                	<span class="hint">Formato: DD/MM/AAAA</span>
+					          	</div>
+					    		<div class="form-group col-md-6">
+					              	<label>Puerto Destino</label>
+			              			<input class="form-control" disabled="" type="text" value="<?php if($this->segPedido) $this->segPosicion->puerto_destino ?>"></input>
+					            </div>
+
+					    		<div class="form-group col-md-6">
+					    			<label>Fecha de Arribo a Venezuela</label>
+					                <div class="input-group date">
+			                  			<div class="input-group-addon">
+				                    		<i class="fa fa-calendar"></i>
+				                  		</div>
+			              				<input class="form-control" disabled="" type="text" value="<?php if($this->segPedido) $this->segPosicion->fch_arribo_vzla ?>"></input>
+					                </div>
+				                	<span class="hint">Formato: DD/MM/AAAA</span>
+					            </div>
+
+					    		<div class="form-group col-md-6">
+					              	<label>Fecha de Orden de Traslado</label>
+					                <div class="input-group date">
+			                  			<div class="input-group-addon">
+				                    		<i class="fa fa-calendar"></i>
+				                  		</div>
+			              				<input class="form-control" disabled="" type="text" value="<?php if($this->segPedido) $this->segPosicion->fch_traslado ?>"></input>
+					                </div>
+				                	<span class="hint">Formato: DD/MM/AAAA</span>
+					          	</div>
+
+					    		<div class="form-group col-md-6">
+					              	<label>Fecha de Entrega - Almacén</label>
+					                <div class="input-group date">
+			                  			<div class="input-group-addon">
+				                    		<i class="fa fa-calendar"></i>
+				                  		</div>
+			              				<input class="form-control" disabled="" type="text" value="<?php if($this->segPedido) $this->segPosicion->fch_entrega_alma ?>"></input>
+					                </div>
+				                	<span class="hint">Formato: DD/MM/AAAA</span>
+					            </div>
+				    		</div>
+
+				    		<div class="form-group col-md-6">
+
+					    		<div class="form-group col-md-12">
+					              	<label>Fecha de Entrada - Almacén</label>
+					                <div class="input-group date">
+			                  			<div class="input-group-addon">
+				                    		<i class="fa fa-calendar"></i>
+				                  		</div>
+			              				<input class="form-control" disabled="" type="text" value="<?php if($this->segPedido) $this->segPosicion->fch_entrada_alma ?>"></input>
+					                </div>
+				                	<span class="hint">Formato: DD/MM/AAAA</span>
+					          	</div>
+
+		  			    		<div class="form-group col-md-12">
+					              	<label>Tipo de entrega</label>
+		              				<input class="form-control" disabled="" type="text" value="<?php if($this->segPedido) $this->segPosicion->tipo_entrega ?>"></input>
+				            	</div>
+				    		</div>
+
+				    		<div class="form-group col-md-6">
+
+					    		<div class="form-group col-md-12">
+					              	<label>Material Conforme?</label>
+		              				<input class="form-control" disabled="" type="text" value="<?php if($this->segPedido) $this->segPosicion->material_conforme ?>"></input>
+					          	</div>
+
+					    		<div class="form-group col-md-12" id="fechaReclamo" <?php if($this->segPosicion){if($this->segPosicion->material_conforme=='no' or $this->segPosicion->material_conforme==null) echo 'style="display: none";';} ?>>
+					              	<label>Fecha de Reclamo</label>
+					                <div class="input-group date">
+			                  			<div class="input-group-addon">
+				                    		<i class="fa fa-calendar"></i>
+				                  		</div>
+			              				<input class="form-control" disabled="" type="text" value="<?php if($this->segPedido) $this->segPosicion->fch_reclamo ?>"></input>
+					                </div>
+				                	<span class="hint">Formato: DD/MM/AAAA</span>
+					          	</div>
+
+				    		</div>
+
+		        		</div>
+
+					</form>
+
+			    </div>
+			</div>
+		</div>
+
+	</div>
+
+
+</section>
+
+<script>
+
+	/*SECCION DE FUNCIONES PARA VALIDAR*/
+
+	/*funcion para campo de reclamo*/
+	function conformeListener(){
+		//campos
+		var selConforme = document.getElementById("selConforme");
+		var fchReclamo = document.getElementById("fchReclamo");
+		//form-group
+		var fechaReclamo = document.getElementById("fechaReclamo");
+	    
+	    if(selConforme.value == "si")
+	    {
+	    	fechaReclamo.setAttribute("style", "display: null;");
+	    } else {
+	    	fchReclamo.value = null;
+	    	fechaReclamo.setAttribute("style", "display: none;");
+	    }
+	}
+	/*-------*/
+
+	$(function () {
+    	//Date picker->Fecha de entrega material A. Despachador
+    	$('#fchDespachador').datepicker({
+      		autoclose: true,
+      		format: 'dd/mm/yyyy',
+      		language: 'es'
+    	})
+
+    	//Date picker->Fecha de embarque
+    	$('#fchEmbarque').datepicker({
+      		autoclose: true,
+      		format: 'dd/mm/yyyy',
+      		language: 'es'
+    	})
+
+    	//Date picker->Fecha fecha de arribo venezuela
+    	$('#fchArribo').datepicker({
+      		autoclose: true,
+      		format: 'dd/mm/yyyy',
+      		language: 'es'
+    	})
+
+    	//Date picker->Fecha de orden de traslado
+    	$('#fchTraslado').datepicker({
+      		autoclose: true,
+      		format: 'dd/mm/yyyy',
+      		language: 'es'
+    	})
+
+    	//Date picker->Fecha de entrega material almacen
+    	$('#fchAlmacen').datepicker({
+      		autoclose: true,
+      		format: 'dd/mm/yyyy',
+      		language: 'es'
+    	})
+
+    	//Date picker->Fecha de reclamo
+    	$('#fchReclamo').datepicker({
+      		autoclose: true,
+      		format: 'dd/mm/yyyy',
+      		language: 'es'
+    	})
+
+    	//Date picker->Fecha de entrada
+    	$('#fchEntrada').datepicker({
+      		autoclose: true,
+      		format: 'dd/mm/yyyy',
+      		language: 'es'
+    	})
+	});
+</script>

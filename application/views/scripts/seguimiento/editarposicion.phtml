@@ -1,0 +1,411 @@
+<section class="invoice" style="width: 50%; margin: 0 auto;">
+
+	<div class="row">
+		<div class="col-md-12 text-center">
+
+			<div class="col-md-6 text-center">
+		  		<a type="button" href="javascript:window.history.go(-1);" class="btn btn-primary btn-flat" >
+		    		<i class="fa fa-arrow-left"></i> Volver
+		  		</a>
+	  		</div>
+
+	  		<div class="col-md-6 text-center">
+		  		<a class="btn btn-success btn-flat" type="button" data-toggle="modal" data-target="#modal-mod" >
+		    		<i class="fa fa-clock-o"></i> Modificaciones
+		  		</a>
+	  		</div>
+
+		</div>
+	</div>
+
+
+	<!--Modal de modificaciones-->
+    <div class="modal fade" id="modal-mod">
+      	<div class="modal-dialog">
+	        <div class="modal-content">
+	          	<div class="modal-header">
+	            	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	             		<span aria-hidden="true">&times;</span>
+	             	</button>
+	            	<h4 class="modal-title">Historial de modificaciones</h4>
+	          	</div>
+
+	          	<div class="modal-body">
+
+		          	<table id="modificaciones" class="table table-striped table-bordered" align="center">
+			            <thead class="bg-gray">
+				            <tr>
+				            	<th>Fecha</th>
+				            	<th>Hora</th>
+				            	<th>Usuario</th>
+								<th>Campo</th>
+								<th>Modificación</th>
+				            </tr>
+			            </thead>
+		          	</table>
+
+	          	</div>
+
+	          	<div class="modal-footer">
+	            	<button type="button" class="btn btn-default pull-right" data-dismiss="modal">Cerrar</button>
+	          	</div>
+	        </div>
+	        <!-- /.modal-content -->
+      	</div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal mod -->
+
+
+
+
+	</br>
+
+	<div class="box">
+		
+    	<div class="box-header bg-orange">
+		  	<h3 class="box-title">
+		      	<i class="glyphicon glyphicon-list-alt"></i> Seguimiento de Posición
+		  	</h3>
+    	</div>
+
+		<div class="box-body">
+
+		  	<!-- info row -->
+		  	<div class="row invoice-info" >
+			    <div class="box-body with-border">
+
+			    	<div class="row">
+
+						<div class="form-group col-md-12">
+				    		<div class="form-group col-md-6">
+				              	<label>Posición</label>
+				              	<input class="form-control" disabled="" type="text" value="<?php echo $this->pos ?>"></input>
+				            </div>
+
+				    		<div class="form-group col-md-6 ">
+				              	<label>Nro. Documento</label>
+				              	<input class="form-control" disabled="" type="text" value="<?php echo $this->id ?>"></input>
+				            </div>
+
+				    		<div class="form-group col-md-12 ">
+				              	<label>Descripcion</label>
+				              	<input class="form-control" disabled="" type="text" value="<?php echo $this->des ?>"></input>
+				            </div>		
+			        	</div>
+
+		        	</div>
+
+		        	<form role="form" action="#" method="POST">
+
+		        		<div class="row ">
+
+			    	    	<div class="form-group col-md-12" <?php if ($this->dep=='NACIONAL') echo 'style="display: none";'; ?> >
+
+					    		<div class="form-group col-md-6">
+					              	<label>Fecha de Entrega - Despachador</label>
+					                <div class="input-group date">
+					                  	<div class="input-group-addon">
+					                    	<i class="fa fa-calendar"></i>
+					                  	</div>
+					              		<?php 
+					              		$this->formulario->getElement(Application_Form_SeguimientoPosicion::E_FCH_DESPACHADOR)->setValue($this->segPosicion->fch_entrega_desp);
+					              		echo $this->formulario->getElement(Application_Form_SeguimientoPosicion::E_FCH_DESPACHADOR)->renderViewHelper(); 
+					              		?>
+					                </div>
+					                <span class="hint">Formato: DD/MM/AAAA</span>
+					            </div>
+
+					    		<div class="form-group col-md-6">
+					              	<label>Fecha de Embarque</label>
+					                <div class="input-group date">
+			                  			<div class="input-group-addon">
+				                    		<i class="fa fa-calendar"></i>
+				                  		</div>
+				              			<?php 
+					              		$this->formulario->getElement(Application_Form_SeguimientoPosicion::E_FCH_EMBARQUE)->setValue($this->segPosicion->fch_embarque);	              			
+				              			echo $this->formulario->getElement(Application_Form_SeguimientoPosicion::E_FCH_EMBARQUE)->renderViewHelper(); 
+				              			?>
+					                </div>
+				                	<span class="hint">Formato: DD/MM/AAAA</span>
+					          	</div>
+					    		<div class="form-group col-md-6">
+					              	<label>Puerto Destino</label>
+					              	<?php 
+				              		$this->formulario->getElement(Application_Form_SeguimientoPosicion::E_PUERTO_DESTINO)->setValue($this->segPosicion->puerto_destino);	 
+					              	echo $this->formulario->getElement(Application_Form_SeguimientoPosicion::E_PUERTO_DESTINO)->renderViewHelper(); 
+					              	?>
+					            </div>
+
+					    		<div class="form-group col-md-6">
+					    			<label>Fecha de Arribo a Venezuela</label>
+					                <div class="input-group date">
+			                  			<div class="input-group-addon">
+				                    		<i class="fa fa-calendar"></i>
+				                  		</div>
+				              			<?php 
+					              		$this->formulario->getElement(Application_Form_SeguimientoPosicion::E_FCH_ARRIBO)->setValue($this->segPosicion->fch_arribo_vzla);	 
+				              			echo $this->formulario->getElement(Application_Form_SeguimientoPosicion::E_FCH_ARRIBO)->renderViewHelper(); 
+				              			?>
+					                </div>
+				                	<span class="hint">Formato: DD/MM/AAAA</span>
+					            </div>
+
+					    		<div class="form-group col-md-6">
+					              	<label>Fecha de Orden de Traslado</label>
+					                <div class="input-group date">
+			                  			<div class="input-group-addon">
+				                    		<i class="fa fa-calendar"></i>
+				                  		</div>
+					              		<?php 
+					              		$this->formulario->getElement(Application_Form_SeguimientoPosicion::E_FCH_TRASLADO)->setValue($this->segPosicion->fch_traslado);			              		
+					              		echo $this->formulario->getElement(Application_Form_SeguimientoPosicion::E_FCH_TRASLADO)->renderViewHelper(); 
+					              		?>
+					                </div>
+				                	<span class="hint">Formato: DD/MM/AAAA</span>
+					          	</div>
+
+					    		<div class="form-group col-md-6">
+					              	<label>Fecha de Entrega - Almacén</label>
+					                <div class="input-group date">
+			                  			<div class="input-group-addon">
+				                    		<i class="fa fa-calendar"></i>
+				                  		</div>
+					              		<?php 
+					              		$this->formulario->getElement(Application_Form_SeguimientoPosicion::E_FCH_ALMACEN)->setValue($this->segPosicion->fch_entrega_alma);			              		
+					              		echo $this->formulario->getElement(Application_Form_SeguimientoPosicion::E_FCH_ALMACEN)->renderViewHelper(); 
+					              		?>
+					                </div>
+				                	<span class="hint">Formato: DD/MM/AAAA</span>
+					            </div>
+				    		</div>
+
+				    		<div class="form-group col-md-6">
+
+					    		<div class="form-group col-md-12">
+					              	<label>Fecha de Entrada - Almacén</label>
+					                <div class="input-group date">
+			                  			<div class="input-group-addon">
+				                    		<i class="fa fa-calendar"></i>
+				                  		</div>
+					              		<?php 
+			              				$this->formulario->getElement(Application_Form_SeguimientoPosicion::E_FCH_ENTRADA)->setValue($this->segPosicion->fch_entrada_alma);
+					              		echo $this->formulario->getElement(Application_Form_SeguimientoPosicion::E_FCH_ENTRADA)->renderViewHelper(); 
+					              		?>
+					                </div>
+				                	<span class="hint">Formato: DD/MM/AAAA</span>
+					          	</div>
+
+		  			    		<div class="form-group col-md-12">
+					              	<label>Tipo de entrega</label>
+					              	<?php 
+				              		$this->formulario->getElement(Application_Form_SeguimientoPosicion::E_TIPO_ENTREGA)->setValue($this->segPosicion->tipo_entrega);			              	
+					              	echo $this->formulario->getElement(Application_Form_SeguimientoPosicion::E_TIPO_ENTREGA)->renderViewHelper(); 
+					              	?>
+				            	</div>
+				    		</div>
+
+				    		<div class="form-group col-md-6" onchange="conformeListener()">
+
+					    		<div class="form-group col-md-12">
+					              	<label>Material Conforme?</label>
+					              	<?php 
+				              		$this->formulario->getElement(Application_Form_SeguimientoPosicion::E_CONFORME)->setValue($this->segPosicion->material_conforme);			              	
+					              	echo $this->formulario->getElement(Application_Form_SeguimientoPosicion::E_CONFORME)->renderViewHelper(); 
+					              	?>
+					          	</div>
+
+					    		<div class="form-group col-md-12" id="fechaReclamo" <?php if($this->segPosicion->material_conforme=='no' or $this->segPosicion->material_conforme==null) echo 'style="display: none";'; ?>>
+					              	<label>Fecha de Reclamo</label>
+					                <div class="input-group date">
+			                  			<div class="input-group-addon">
+				                    		<i class="fa fa-calendar"></i>
+				                  		</div>
+					              		<?php 
+				              			$this->formulario->getElement(Application_Form_SeguimientoPosicion::E_FCH_RECLAMO)->setValue($this->segPosicion->fch_reclamo);				              		
+					              		echo $this->formulario->getElement(Application_Form_SeguimientoPosicion::E_FCH_RECLAMO)->renderViewHelper(); 
+					              		?>
+					                </div>
+				                	<span class="hint">Formato: DD/MM/AAAA</span>
+					          	</div>
+
+				    		</div>
+
+		        		</div>
+
+			          	<div class="row" style="display: none;">
+				    		<?php 
+				    		echo $this->formulario->getElement(Application_Form_SeguimientoPosicion::E_PEDIDO)->setValue($this->id); 
+							echo $this->formulario->getElement(Application_Form_SeguimientoPosicion::E_POSICION)->setValue($this->pos);
+				    		?>
+		    			</div>
+				    
+				    	<div class="row">
+				    		<div class="form-group col-md-12" style="text-align: center;">
+				              	<?php echo $this->formulario->getElement(Application_Form_SeguimientoPosicion::E_GUARDAR)->renderViewHelper(); ?>
+				    		</div>
+				    	</div>
+
+					</form>
+
+			    </div>
+			</div>
+		</div>
+
+	</div>
+
+
+</section>
+
+<script>
+
+	/*SECCION DE FUNCIONES PARA VALIDAR*/
+
+	/*funcion para campo de reclamo*/
+	function conformeListener(){
+		//campos
+		var selConforme = document.getElementById("selConforme");
+		var fchReclamo = document.getElementById("fchReclamo");
+		//form-group
+		var fechaReclamo = document.getElementById("fechaReclamo");
+	    
+	    if(selConforme.value == "si")
+	    {
+	    	fechaReclamo.setAttribute("style", "display: null;");
+	    } else {
+	    	fchReclamo.value = null;
+	    	fechaReclamo.setAttribute("style", "display: none;");
+	    }
+	}
+	/*-------*/
+
+	$(function () {
+    	//Date picker->Fecha de entrega material A. Despachador
+    	$('#fchDespachador').datepicker({
+      		autoclose: true,
+      		format: 'dd/mm/yyyy',
+      		language: 'es'
+    	})
+
+    	//Date picker->Fecha de embarque
+    	$('#fchEmbarque').datepicker({
+      		autoclose: true,
+      		format: 'dd/mm/yyyy',
+      		language: 'es'
+    	})
+
+    	//Date picker->Fecha fecha de arribo venezuela
+    	$('#fchArribo').datepicker({
+      		autoclose: true,
+      		format: 'dd/mm/yyyy',
+      		language: 'es'
+    	})
+
+    	//Date picker->Fecha de orden de traslado
+    	$('#fchTraslado').datepicker({
+      		autoclose: true,
+      		format: 'dd/mm/yyyy',
+      		language: 'es'
+    	})
+
+    	//Date picker->Fecha de entrega material almacen
+    	$('#fchAlmacen').datepicker({
+      		autoclose: true,
+      		format: 'dd/mm/yyyy',
+      		language: 'es'
+    	})
+
+    	//Date picker->Fecha de reclamo
+    	$('#fchReclamo').datepicker({
+      		autoclose: true,
+      		format: 'dd/mm/yyyy',
+      		language: 'es'
+    	})
+
+    	//Date picker->Fecha de entrada
+    	$('#fchEntrada').datepicker({
+      		autoclose: true,
+      		format: 'dd/mm/yyyy',
+      		language: 'es'
+    	})
+	});
+
+
+	//formato de fecha europea
+  	jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+	    "date-uk-pre": function ( a ) {
+	        var ukDatea = a.split('/');
+	        return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
+	    },
+
+	    "date-uk-asc": function ( a, b ) {
+	        return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+	    },
+
+	    "date-uk-desc": function ( a, b ) {
+	        return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+	    }
+  	});
+
+	$(document).ready(
+  		function() {
+	        $('#modificaciones').DataTable({
+	          	language: {
+		            "decimal": "",
+		            "emptyTable": "No existen modificaciones",
+		            "info": "<pre>Mostrando _START_ a _END_ de <b>_TOTAL_</b> Modificaciones</pre>",
+		            "infoEmpty": "<pre>Mostrando 0 a 0 de <b>0</b> Modificaciones</pre>",
+		            "infoFiltered": "(Filtrado de _MAX_ total Modificaciones)",
+		            "infoPostFix": "",
+		            "thousands": ",",
+		            "lengthMenu": "Mostrar _MENU_ Modificaciones",
+		            "loadingRecords": "Cargando...",
+		            "processing": "Procesando...",
+		            "search": "Buscar",
+		            "zeroRecords": "No hay modificaciones",
+		            "paginate": {
+		                "first": "Primero",
+		                "last": "Ultimo",
+		                "next": "Siguiente",
+		                "previous": "Anterior"
+		            }
+	          	},
+          		lengthChange: false,
+          		searching: false,
+	          	ajax: {
+	            	url: '<?php echo $this->url(array('controller' => 'ajax', 'action' => 'getmodificacionposicion', 'pedido' => $this->id, 'posicion' => $this->pos)); ?>',
+	            	dataSrc: '',
+	          	},
+	          	columns: [
+		            { 	
+		            	data: 'fecha',
+		            	className: 'text-center',
+		            	type: 'date-uk',
+		              	orderable: false,
+		        	},
+		            { 	
+		            	data: 'hora',
+		            	className: 'text-center',
+		              	orderable: false
+		        	},
+		            { 	
+		            	data: 'modificado_por',
+		            	className: 'text-center',
+		              	orderable: false
+		        	},	          	
+		            { 	
+		            	data: 'campo',
+		            	className: 'text-center',
+		              	orderable: false
+		        	},
+		            {
+		              	data: 'modificacion',
+		              	orderable: false
+		            }
+	          	],
+          		order: [[ 0, 'desc' ], [ 1, 'desc' ]]
+	        });
+
+	    }
+    );
+</script>

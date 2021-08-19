@@ -1,0 +1,122 @@
+<br>
+<br>
+<div style="text-align: center;">
+	<br>
+	<h1 >ASIGNACION DE PEDIDO</h1>
+	<br>
+	<br>
+	<br>
+</div>
+
+<section class="invoice" style="width: 70%; margin: 0 auto;">
+
+	<div class="box">
+		<!-- box-header -->
+		<div class="box-header bg-orange">
+			<h3 class="box-title"><b>ANALISTAS DE ADMINISTRACION DE CONTRATOS</b></h3>
+		</div>
+		<!-- /.box-header -->
+		<div class="box-body table-responsive">
+
+			<table id="analistas" class="table table-striped table-bordered">
+				<thead class="bg-gray">
+					<tr>
+						<th class="text-center">Cedula</th>
+						<th class="text-center">Ficha</th>
+						<th class="text-center">nombre</th>
+						<th class="text-center">apellido</th>
+						<th class="text-center">asignaciones</th>
+						<th class="text-center">Opciones</th>
+					</tr>
+				</thead>
+			</table>
+
+		</div>
+	  
+	  <!-- /.box-body -->
+	</div>
+
+</section>
+
+
+
+<!------SCRIPTS------>
+<script type="text/javascript">
+
+	/*funcion para los campos que sean solo digitos o numeros*/
+	function validarDigitos(evt){
+		var charCode = (evt.which) ? evt.which : event.keyCode
+		if (charCode > 31 && (charCode < 48 || charCode > 57)) return false;
+		return true;
+    }
+
+	$(document).ready(
+  		function() {
+	        $('#analistas').DataTable({
+	          	language: {
+		            "decimal": "",
+		            "emptyTable": "No existen asignaciones",
+		            "info": "<pre>Mostrando _START_ a _END_ de <b>_TOTAL_</b> Analistas</pre>",
+		            "infoEmpty": "<pre>Mostrando 0 a 0 de <b>0</b> Analistas</pre>",
+		            "infoFiltered": "(Filtrado de _MAX_ total Analistas)",
+		            "infoPostFix": "",
+		            "thousands": ",",
+		            "lengthMenu": "Mostrar _MENU_ Analistas",
+		            "loadingRecords": "Cargando...",
+		            "processing": "Procesando...",
+		            "search": "Buscar",
+		            "zeroRecords": "No existen asignaciones",
+		            "paginate": {
+		                "first": "Primero",
+		                "last": "Ultimo",
+		                "next": "Siguiente",
+		                "previous": "Anterior"
+		            }
+	          	},
+          		lengthChange: false,
+          		searching: false,
+	          	ajax: {
+	            	url: '<?php echo $this->url(array('controller' => 'ajax', 'action' => 'getanalistas')); ?>',
+	            	dataSrc: '',
+	          	},
+	          	columns: [
+		            { 	
+		            	data: 'cedula',
+		              	orderable: false,
+		              	className: 'text-center'
+		        	},
+		            { 	
+		            	data: 'ficha',
+		              	orderable: false,
+		              	className: 'text-center'
+		        	},	
+		        			            { 	
+		            	data: 'nombre',
+		              	orderable: false,
+		        	},
+		            { 	
+		            	data: 'apellido',
+		              	orderable: false,
+		        	},
+		            { 	
+		            	data: 'asignaciones',
+		              	orderable: false,
+		              	className: 'text-center',
+		              	defaultContent: 'Sin Asignaciones'
+		        	},	          	
+                    {
+		              	data: 'ficha',
+		              	orderable: false,
+		              	className: 'text-center',
+		              	render: function (data, type, row, meta) { //Solo importa data
+		                	return '<a class="fa fa-user fa-2x" title="Ver Asignaciones" href="analista?ficha='+data+'"></a>';
+		              	}
+		            }
+	          	],
+	          	order: [[0, 'asc']]
+	        });
+
+	    }
+    );
+
+</script>

@@ -1,0 +1,33 @@
+
+<br>
+<br>
+<div style="text-align: center;">
+	<br>
+	<h1 >CONSULTA DE SOLICITUD DE PEDIDO</h1>
+	<br>
+	<br>
+	<br>
+	<form action="#" method="post">
+		<div class="input-group col-md-3" style="margin: 0 auto;">
+			<?php echo $this->formulario->getElement(Application_Form_ConsultaSolp::E_CODIGO)->renderViewHelper(); ?>
+			<span class="input-group-btn">
+			  	<?php echo $this->formulario->getElement(Application_Form_ConsultaSolp::E_BUSCAR)->renderViewHelper(); ?>
+			</span>
+		</div>
+	</form>
+
+</div>
+
+
+<script type="text/javascript">
+
+	/*funcion para los campos que sean solo digitos o numeros*/
+	function validarDigitos(evt){
+		var charCode = (evt.which) ? evt.which : event.keyCode
+		if (charCode > 31 && (charCode < 48 || charCode > 57))
+		return false;
+
+		return true;
+    }
+
+</script>
