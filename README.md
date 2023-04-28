@@ -4,7 +4,7 @@ SAC (Sistema de Administración de Compras de Pedidos) / (Order Purchases Admini
 
 ## Project Description
 
-This is my THESIS for university's degree Informatics Engineerin in UCAB (Universidad Catolica Andres Bello)/(Andres Bello Catholic Univesity), it gives administration panels for national and international orders purchases between the company and others.
+This is my THESIS for university's degree Informatics Engineering in UCAB (Universidad Catolica Andres Bello)/(Andres Bello Catholic Univesity), it gives administration panels for national and international orders purchases between the company and others.
 
 ## Technologies
 
